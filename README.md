@@ -15,7 +15,7 @@ $ docker run -d \
     -i k4rian/twserver
 ```
 
-- Same as above but using a different port *(8080 (default) -> 8888)*:
+- Same as above but using a different port (`8080`(default) -> `8888`):
 ```
 $ docker run -d \
     --name twserver \
@@ -32,7 +32,7 @@ __Requirements__:
 — Docker >= __18.03.1__                         
 — Git *(optional)*
 
-Like any Docker image the building process is pretty straightforward. 
+Like any Docker image the building process is pretty straightforward: 
 
 - Clone (or download) the GitHub repository to an empty folder on your local machine:
 ```
