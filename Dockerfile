@@ -11,19 +11,16 @@ RUN mkdir /tw \
 
 
 # Build the twserver binary
-FROM golang:buster AS binbuilder
+FROM golang:bullseye AS binbuilder
 
-RUN go get github.com/k4rian/twserver-go \
-    && go install -ldflags '-w -s' github.com/k4rian/twserver-go \
+RUN go install -ldflags '-w -s' github.com/K4rian/twserver-go@latest \
     && mkdir /twserv \
     && mv ${GOPATH}/bin/twserver-go /twserv/twserver \
     && chmod 755 /twserv/twserver
 
 
 # Setup the Tiddly Wiki HTTP Server
-FROM debian:buster-slim
-
-LABEL maintainer="contact@k4rian.com"
+FROM debian:bullseye-slim
 
 ENV USERNAME tw
 ENV USERHOME /home/$USERNAME
@@ -35,11 +32,8 @@ RUN set -x \
     && apt-get clean autoclean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY --from=binbuilder --chown=tw /twserv/twserver /home/tw/twserver
-COPY --from=htmlbuilder --chown=tw /tw/output/index.html /home/tw/www/index.html
-# Docker >=18.09.0:
-# COPY --from=binbuilder --chown=$USERNAME /twserv/twserver $USERHOME/twserver
-# COPY --from=htmlbuilder --chown=$USERNAME /tw/output/index.html $USERHOME/www/index.html
+COPY --from=binbuilder --chown=$USERNAME /twserv/twserver $USERHOME/twserver
+COPY --from=htmlbuilder --chown=$USERNAME /tw/output/index.html $USERHOME/www/index.html
 
 USER $USERNAME
 WORKDIR $USERHOME
