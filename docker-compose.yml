@@ -1,0 +1,16 @@
+version: '3.8'
+
+volumes:
+  twserver_storage:
+
+services:
+  twserver:
+    container_name: twserver
+    image: k4rian/twserver:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    volumes:
+      - twserver_storage:/home
