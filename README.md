@@ -32,10 +32,12 @@ docker run -d \
   -i k4rian/twserver
 ```
 
-- Using `docker compose` with the provided [compose file][5]:
+## Using Compose
+- Deploying the server with the provided [compose file][5]:
 ```shell
-docker compose up
+docker compose -p twserver up -d
 ```
+> A named volume is defined in order to store the server data that can be recovered if the container is removed and restarted.
 
 ## Manual build
 __Requirements__:<br>
